@@ -8,4 +8,8 @@
   width: 9rem;
   height: auto;
   border: solid 3px black;
+  transition: transform 250ms ease-in-out;
+}
+.card-img:hover {
+  transform: scale(1.05);
 }

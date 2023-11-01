@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import fetchAllSplashArts from "../leagueData";
+import "../styles/CardGrid.css";
 
 let images;
 
@@ -21,7 +22,7 @@ function selectRandomImages(amountToSelect) {
 }
 
 function Card({ imgSrc }) {
-  return <img src={imgSrc}></img>;
+  return <img className="card-img" src={imgSrc}></img>;
 }
 
 export default function CardGrid() {
@@ -35,7 +36,7 @@ export default function CardGrid() {
       fetchAllSplashArts().then((res) => {
         console.log("fired");
         images = res;
-        const randomImages = selectRandomImages(25);
+        const randomImages = selectRandomImages(18);
         setDisplayedImages(randomImages);
       });
     }

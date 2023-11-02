@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "/src/styles/App.css";
-import CardGrid from "./CardGrid";
 import Header from "./Header";
 import fetchAllSplashArts from "../leagueData";
+import GameDisplay from "./GameDisplay";
 
 function App() {
   const [imagePool, setImagePool] = useState(null);
@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <Header />
-      {!imagePool ? "" : <CardGrid imagePool={imagePool} />}
+      {!imagePool ? "" : <GameDisplay imagePool={imagePool} />}
     </>
   );
 }

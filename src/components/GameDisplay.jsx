@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import fetchAllSplashArts from "../leagueData";
 import "../styles/CardGrid.css";
 
 function getRandomIntInclusive(min, max) {
@@ -8,10 +7,10 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function Card({ imgSrc, handleClick }) {
+function Card({ imgSrc, handleCardClick }) {
   return (
     <img
-      onClick={handleClick}
+      onClick={handleCardClick}
       draggable="false"
       className="card-img"
       src={imgSrc}
@@ -19,11 +18,22 @@ function Card({ imgSrc, handleClick }) {
   );
 }
 
-export default function CardGrid({ imagePool }) {
+function CardGrid({ displayedImages, handleCardClick }) {
+  console.log({ displayedImages });
+
+  return (
+    <div className="card-grid">
+      {displayedImages?.map((image, i) => (
+        <Card key={i} imgSrc={image} handleCardClick={handleCardClick} />
+      ))}
+    </div>
+  );
+}
+
+export default function GameDisplay({ imagePool }) {
   const [displayedImages, setDisplayedImages] = useState(
     selectRandomImages(18)
   );
-  console.log({ displayedImages });
 
   function selectRandomImages(amountToSelect) {
     const randomImages = [];
@@ -57,10 +67,9 @@ export default function CardGrid({ imagePool }) {
   }
 
   return (
-    <div className="card-grid">
-      {displayedImages?.map((image, i) => (
-        <Card key={i} imgSrc={image} handleClick={shuffleImages} />
-      ))}
-    </div>
+    <CardGrid
+      displayedImages={displayedImages}
+      handleCardClick={shuffleImages}
+    />
   );
 }

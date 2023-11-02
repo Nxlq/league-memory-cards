@@ -38,10 +38,12 @@ function CardGrid({ displayedCards, handleCardClick }) {
   );
 }
 
-function ScoreBoard({ cardCount }) {
+function ScoreBoard({ cardCount, playerScore }) {
   return (
     <div className="scoreboard">
-      <h2>Score: 0/{cardCount}</h2>
+      <h2>
+        Score: {playerScore}/{cardCount}
+      </h2>
     </div>
   );
 }
@@ -95,7 +97,9 @@ export default function GameDisplay({ imagePool }) {
     updatedCards[clickedCardIndex].clicked = true;
 
     const newCardsToDisplay = shuffleCards(updatedCards);
+
     setdisplayedCards(newCardsToDisplay);
+    setPlayerScore(playerScore + 1);
   }
 
   return (
@@ -103,7 +107,7 @@ export default function GameDisplay({ imagePool }) {
       {gameStatus === "over" ? <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1> : ""}
       {gameStatus === "playing" ? (
         <>
-          <ScoreBoard cardCount={cardCount} />
+          <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
           <CardGrid
             displayedCards={displayedCards}
             handleCardClick={handleCardClick}

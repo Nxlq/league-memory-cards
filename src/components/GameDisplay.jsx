@@ -25,16 +25,18 @@ function CardGrid({ displayedCards, handleCardClick }) {
   console.log({ displayedCards });
 
   return (
-    <div className="card-grid">
-      {displayedCards?.map((card) => (
-        <Card
-          key={card.id}
-          id={card.id}
-          imgSrc={card.img}
-          handleCardClick={handleCardClick}
-        />
-      ))}
-    </div>
+    <>
+      <div className="card-grid invisible">
+        {displayedCards.map((card) => (
+          <Card
+            key={card.id}
+            id={card.id}
+            imgSrc={card.img}
+            handleCardClick={handleCardClick}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -51,6 +53,16 @@ function ScoreBoard({ cardCount, playerScore }) {
 export default function GameDisplay({ imagePool, handleGameOver }) {
   const [displayedCards, setdisplayedCards] = useState(selectRandomImages(18));
   const [playerScore, setPlayerScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        document.querySelector(".card-grid").classList.remove("invisible");
+        setIsLoading(false);
+      }, 1000);
+    }
+  }, [isLoading]);
 
   const cardCount = displayedCards?.length;
 
@@ -104,7 +116,10 @@ export default function GameDisplay({ imagePool, handleGameOver }) {
 
   return (
     <>
-      <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
+      {isLoading ? <div>LOADING LOADING LOADING</div> : null}
+      {!isLoading ? (
+        <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
+      ) : null}
       <CardGrid
         displayedCards={displayedCards}
         handleCardClick={handleCardClick}

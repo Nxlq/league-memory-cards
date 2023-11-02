@@ -41,15 +41,17 @@ export default async function fetchAllSplashArts() {
   // create an array of all the image links for all champ skin splash arts
   const images = [];
 
-  // loop through the championsDetails.data, map the image links for each champs skin, and spread them into the images arr
+  // loop through the championsDetails.data, map the image link and id for each champs skin, and spread them into the images arr
   championsDetails.forEach((champion) => {
     const [champInfo] = Object.values(champion.data);
-    console.log(champInfo);
+    console.log({ champInfo });
 
-    const allSkins = champInfo.skins.map(
-      (skin) =>
-        `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champInfo.id}_${skin.num}.jpg`
-    );
+    const allSkins = champInfo.skins.map((skin) => {
+      return {
+        img: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champInfo.id}_${skin.num}.jpg`,
+        id: skin.id,
+      };
+    });
 
     images.push(...allSkins);
   });

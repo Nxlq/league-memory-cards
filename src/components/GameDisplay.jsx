@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../styles/CardGrid.css";
+import "../styles/GameDisplay.css";
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -7,33 +7,43 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function Card({ imgSrc, handleCardClick }) {
+function Card({ imgSrc, handleCardClick, id }) {
   return (
-    <img
-      onClick={handleCardClick}
-      draggable="false"
-      className="card-img"
-      src={imgSrc}
-    ></img>
+    <div className="card" id={id} onClick={handleCardClick}>
+      <img draggable="false" className="card-img" src={imgSrc}></img>
+    </div>
   );
 }
 
-function CardGrid({ displayedImages, handleCardClick }) {
-  console.log({ displayedImages });
+function CardGrid({ displayedCards, handleCardClick }) {
+  console.log({ displayedCards });
 
   return (
     <div className="card-grid">
-      {displayedImages?.map((image, i) => (
-        <Card key={i} imgSrc={image} handleCardClick={handleCardClick} />
+      {displayedCards?.map((card) => (
+        <Card
+          key={card.id}
+          id={card.id}
+          imgSrc={card.img}
+          handleCardClick={handleCardClick}
+        />
       ))}
     </div>
   );
 }
 
-export default function GameDisplay({ imagePool }) {
-  const [displayedImages, setDisplayedImages] = useState(
-    selectRandomImages(18)
+function ScoreBoard({ cardCount }) {
+  return (
+    <div className="scoreboard">
+      <h2>Score: 0/{cardCount}</h2>
+    </div>
   );
+}
+
+export default function GameDisplay({ imagePool }) {
+  const [displayedCards, setdisplayedCards] = useState(selectRandomImages(18));
+
+  const cardCount = displayedCards.length;
 
   function selectRandomImages(amountToSelect) {
     const randomImages = [];
@@ -47,7 +57,7 @@ export default function GameDisplay({ imagePool }) {
   }
 
   function shuffleImages() {
-    const newImagesToDisplay = [...displayedImages];
+    const newImagesToDisplay = [...displayedCards];
     console.log({ newImagesToDisplay });
     let imagesLeftToShuffle = newImagesToDisplay.length;
 
@@ -62,14 +72,17 @@ export default function GameDisplay({ imagePool }) {
       newImagesToDisplay[index] = placeHolder;
     }
 
-    setDisplayedImages(newImagesToDisplay);
+    setdisplayedCards(newImagesToDisplay);
     return newImagesToDisplay;
   }
 
   return (
-    <CardGrid
-      displayedImages={displayedImages}
-      handleCardClick={shuffleImages}
-    />
+    <>
+      <ScoreBoard cardCount={cardCount} />
+      <CardGrid
+        displayedCards={displayedCards}
+        handleCardClick={shuffleImages}
+      />
+    </>
   );
 }

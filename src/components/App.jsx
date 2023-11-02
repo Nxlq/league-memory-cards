@@ -3,9 +3,11 @@ import "/src/styles/App.css";
 import Header from "./Header";
 import fetchAllSplashArts from "../leagueData";
 import GameDisplay from "./GameDisplay";
+import StartScreen from "./StartScreen";
 
 function App() {
   const [imagePool, setImagePool] = useState(null);
+  const [gameStatus, setGameStatus] = useState("startScreen");
   console.log({ imagePool });
 
   useEffect(() => {
@@ -14,10 +16,27 @@ function App() {
     }
   }, [imagePool]);
 
+  function setGameStatusToPlaying() {
+    setGameStatus("playing");
+  }
+
+  function setGameStatusToOver() {
+    setGameStatus("over");
+  }
+
   return (
     <>
       <Header />
-      {!imagePool ? "" : <GameDisplay imagePool={imagePool} />}
+      {gameStatus === "startScreen" && (
+        <StartScreen handleStartGame={setGameStatusToPlaying} />
+      )}
+      {gameStatus === "playing" && (
+        <GameDisplay
+          imagePool={imagePool}
+          handleGameOver={setGameStatusToOver}
+        />
+      )}
+      {gameStatus === "over" && <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1>}
     </>
   );
 }

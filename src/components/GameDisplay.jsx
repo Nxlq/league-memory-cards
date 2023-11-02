@@ -48,14 +48,14 @@ function ScoreBoard({ cardCount, playerScore }) {
   );
 }
 
-export default function GameDisplay({ imagePool }) {
+export default function GameDisplay({ imagePool, handleGameOver }) {
   const [displayedCards, setdisplayedCards] = useState(selectRandomImages(18));
   const [playerScore, setPlayerScore] = useState(0);
-  const [gameStatus, setGameStatus] = useState("playing");
 
-  const cardCount = displayedCards.length;
+  const cardCount = displayedCards?.length;
 
   function selectRandomImages(amountToSelect) {
+    if (!imagePool) return;
     const randomImages = [];
 
     for (let i = 0; i < amountToSelect; i++) {
@@ -91,7 +91,7 @@ export default function GameDisplay({ imagePool }) {
       (card) => card.id === e.target.id
     );
 
-    if (displayedCards[clickedCardIndex].clicked) return setGameStatus("over");
+    if (displayedCards[clickedCardIndex].clicked) return handleGameOver();
 
     const updatedCards = [...displayedCards];
     updatedCards[clickedCardIndex].clicked = true;
@@ -104,18 +104,11 @@ export default function GameDisplay({ imagePool }) {
 
   return (
     <>
-      {gameStatus === "over" ? <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1> : ""}
-      {gameStatus === "playing" ? (
-        <>
-          <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
-          <CardGrid
-            displayedCards={displayedCards}
-            handleCardClick={handleCardClick}
-          />
-        </>
-      ) : (
-        ""
-      )}
+      <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
+      <CardGrid
+        displayedCards={displayedCards}
+        handleCardClick={handleCardClick}
+      />
     </>
   );
 }

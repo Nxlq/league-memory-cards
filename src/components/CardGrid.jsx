@@ -2,54 +2,64 @@ import { useEffect, useState } from "react";
 import fetchAllSplashArts from "../leagueData";
 import "../styles/CardGrid.css";
 
-let images;
-
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function selectRandomImages(amountToSelect) {
-  const randomImages = [];
-
-  for (let i = 0; i < amountToSelect; i++) {
-    const randomIndex = getRandomIntInclusive(0, images.length - 1);
-    randomImages.push(images[randomIndex]);
-  }
-
-  return randomImages;
+function Card({ imgSrc, handleClick }) {
+  return (
+    <img
+      onClick={handleClick}
+      draggable="false"
+      className="card-img"
+      src={imgSrc}
+    ></img>
+  );
 }
 
-function Card({ imgSrc }) {
-  return <img className="card-img" src={imgSrc}></img>;
-}
-
-export default function CardGrid() {
-  // const [allImages, setAllImages] = useState(null);
-  const [displayedImages, setDisplayedImages] = useState(null);
-  console.log({ images });
+export default function CardGrid({ imagePool }) {
+  const [displayedImages, setDisplayedImages] = useState(
+    selectRandomImages(18)
+  );
   console.log({ displayedImages });
 
-  useEffect(() => {
-    if (!displayedImages) {
-      fetchAllSplashArts().then((res) => {
-        console.log("fired");
-        images = res;
-        const randomImages = selectRandomImages(18);
-        setDisplayedImages(randomImages);
-      });
-    }
-    console.log("fired");
-  }, [displayedImages]);
+  function selectRandomImages(amountToSelect) {
+    const randomImages = [];
 
-  console.log({ images });
-  //   console.log({ leagueImages });
+    for (let i = 0; i < amountToSelect; i++) {
+      const randomIndex = getRandomIntInclusive(0, imagePool.length - 1);
+      randomImages.push(imagePool[randomIndex]);
+    }
+
+    return randomImages;
+  }
+
+  function shuffleImages() {
+    const newImagesToDisplay = [...displayedImages];
+    console.log({ newImagesToDisplay });
+    let imagesLeftToShuffle = newImagesToDisplay.length;
+
+    // while there are images left to shuffle
+    while (imagesLeftToShuffle) {
+      // pick a remaining element
+      const index = Math.floor(Math.random() * imagesLeftToShuffle--);
+
+      // and swap it with the current element
+      const placeHolder = newImagesToDisplay[imagesLeftToShuffle];
+      newImagesToDisplay[imagesLeftToShuffle] = newImagesToDisplay[index];
+      newImagesToDisplay[index] = placeHolder;
+    }
+
+    setDisplayedImages(newImagesToDisplay);
+    return newImagesToDisplay;
+  }
 
   return (
     <div className="card-grid">
       {displayedImages?.map((image, i) => (
-        <Card key={i} imgSrc={image} />
+        <Card key={i} imgSrc={image} handleClick={shuffleImages} />
       ))}
     </div>
   );

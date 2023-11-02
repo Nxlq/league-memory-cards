@@ -9,8 +9,14 @@ function getRandomIntInclusive(min, max) {
 
 function Card({ imgSrc, handleCardClick, id }) {
   return (
-    <div className="card" id={id} onClick={handleCardClick}>
-      <img draggable="false" className="card-img" src={imgSrc}></img>
+    <div className="card">
+      <img
+        draggable="false"
+        onClick={(e) => handleCardClick(e)}
+        id={id}
+        className="card-img"
+        src={imgSrc}
+      ></img>
     </div>
   );
 }
@@ -42,6 +48,8 @@ function ScoreBoard({ cardCount }) {
 
 export default function GameDisplay({ imagePool }) {
   const [displayedCards, setdisplayedCards] = useState(selectRandomImages(18));
+  const [playerScore, setPlayerScore] = useState(0);
+  const [gameStatus, setGameStatus] = useState("playing");
 
   const cardCount = displayedCards.length;
 
@@ -50,39 +58,60 @@ export default function GameDisplay({ imagePool }) {
 
     for (let i = 0; i < amountToSelect; i++) {
       const randomIndex = getRandomIntInclusive(0, imagePool.length - 1);
-      randomImages.push(imagePool[randomIndex]);
+      const randomImageObj = { ...imagePool[randomIndex], clicked: false };
+      randomImages.push(randomImageObj);
     }
 
     return randomImages;
   }
 
-  function shuffleImages() {
-    const newImagesToDisplay = [...displayedCards];
-    console.log({ newImagesToDisplay });
-    let imagesLeftToShuffle = newImagesToDisplay.length;
+  function shuffleCards(cardsArr) {
+    const newCardsToDisplay = [...cardsArr];
 
-    // while there are images left to shuffle
-    while (imagesLeftToShuffle) {
+    let CardsLeftToShuffle = newCardsToDisplay.length;
+
+    // while there are Cards left to shuffle
+    while (CardsLeftToShuffle) {
       // pick a remaining element
-      const index = Math.floor(Math.random() * imagesLeftToShuffle--);
+      const index = Math.floor(Math.random() * CardsLeftToShuffle--);
 
       // and swap it with the current element
-      const placeHolder = newImagesToDisplay[imagesLeftToShuffle];
-      newImagesToDisplay[imagesLeftToShuffle] = newImagesToDisplay[index];
-      newImagesToDisplay[index] = placeHolder;
+      const placeHolder = newCardsToDisplay[CardsLeftToShuffle];
+      newCardsToDisplay[CardsLeftToShuffle] = newCardsToDisplay[index];
+      newCardsToDisplay[index] = placeHolder;
     }
 
-    setdisplayedCards(newImagesToDisplay);
-    return newImagesToDisplay;
+    return newCardsToDisplay;
+  }
+
+  function handleCardClick(e) {
+    const clickedCardIndex = displayedCards.findIndex(
+      (card) => card.id === e.target.id
+    );
+
+    if (displayedCards[clickedCardIndex].clicked) return setGameStatus("over");
+
+    const updatedCards = [...displayedCards];
+    updatedCards[clickedCardIndex].clicked = true;
+
+    const newCardsToDisplay = shuffleCards(updatedCards);
+    setdisplayedCards(newCardsToDisplay);
   }
 
   return (
     <>
-      <ScoreBoard cardCount={cardCount} />
-      <CardGrid
-        displayedCards={displayedCards}
-        handleCardClick={shuffleImages}
-      />
+      {gameStatus === "over" ? <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1> : ""}
+      {gameStatus === "playing" ? (
+        <>
+          <ScoreBoard cardCount={cardCount} />
+          <CardGrid
+            displayedCards={displayedCards}
+            handleCardClick={handleCardClick}
+          />
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 }

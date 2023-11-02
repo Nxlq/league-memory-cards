@@ -1,0 +1,22 @@
+.loading-bar__container {
+  height: 1.2rem;
+  width: 12rem;
+  border: solid 3px #0a1428;
+}
+
+.loading-bar {
+  background-color: #0a1428;
+  height: 100%;
+  width: 0%;
+  animation: load 1s ease-in-out;
+}
+
+@keyframes load {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}

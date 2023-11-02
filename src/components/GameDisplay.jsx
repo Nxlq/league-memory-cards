@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/GameDisplay.css";
+import LoadingBar from "./LoadingScreen";
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -116,7 +117,7 @@ export default function GameDisplay({ imagePool, handleGameOver }) {
 
   return (
     <>
-      {isLoading ? <div>LOADING LOADING LOADING</div> : null}
+      {isLoading ? <LoadingBar /> : null}
       {!isLoading ? (
         <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
       ) : null}

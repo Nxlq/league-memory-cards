@@ -8,15 +8,25 @@
   padding: 0;
 }
 
+.card-grid__wrapper {
+  padding: 1rem 7rem;
+}
+
 .card-grid {
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(9, 1fr);
+  gap: 20px; */
+  display: flex;
+  justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .card-img {
   width: 9rem;
   height: auto;
+  /* width: auto; */
+  /* height: 16rem; */
   border: solid 3px black;
   transition: transform 250ms ease-in-out;
 }

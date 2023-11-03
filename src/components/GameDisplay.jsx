@@ -129,10 +129,12 @@ export default function GameDisplay({
       {!isLoading ? (
         <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
       ) : null}
-      <CardGrid
-        displayedCards={displayedCards}
-        handleCardClick={handleCardClick}
-      />
+      <div className="card-grid__wrapper">
+        <CardGrid
+          displayedCards={displayedCards}
+          handleCardClick={handleCardClick}
+        />
+      </div>
     </>
   );
 }

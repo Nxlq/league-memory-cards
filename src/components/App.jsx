@@ -8,6 +8,7 @@ import StartScreen from "./StartScreen";
 function App() {
   const [imagePool, setImagePool] = useState(null);
   const [gameStatus, setGameStatus] = useState("startScreen");
+  const [difficultyLevel, setDifficultyLevel] = useState("Iron");
   console.log({ imagePool });
 
   useEffect(() => {
@@ -24,10 +25,19 @@ function App() {
     setGameStatus("over");
   }
 
+  function handleDifficultySelect(e) {
+    console.log(e);
+    setDifficultyLevel(e.target.textContent);
+  }
+
   return (
     <>
       {gameStatus === "startScreen" && (
-        <StartScreen handleStartGame={setGameStatusToPlaying} />
+        <StartScreen
+          handleStartGame={setGameStatusToPlaying}
+          difficultyLevel={difficultyLevel}
+          handleDifficultySelect={handleDifficultySelect}
+        />
       )}
       {gameStatus === "playing" && (
         <GameDisplay

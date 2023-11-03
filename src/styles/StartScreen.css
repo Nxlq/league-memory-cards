@@ -74,6 +74,7 @@
 
 .rank-display__container {
   padding: 2rem;
+  width: 15rem;
   border: solid #5b5a56 1px;
   /* align-self: flex-start; */
 }

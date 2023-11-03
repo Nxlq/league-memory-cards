@@ -52,8 +52,14 @@ function ScoreBoard({ cardCount, playerScore }) {
   );
 }
 
-export default function GameDisplay({ imagePool, handleGameOver }) {
-  const [displayedCards, setdisplayedCards] = useState(selectRandomImages(18));
+export default function GameDisplay({
+  imagePool,
+  handleGameOver,
+  curCardAmount,
+}) {
+  const [displayedCards, setdisplayedCards] = useState(
+    selectRandomImages(curCardAmount)
+  );
   const [playerScore, setPlayerScore] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 

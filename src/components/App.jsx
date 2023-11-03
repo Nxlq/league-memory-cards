@@ -31,6 +31,8 @@ function App() {
     (dif) => dif.name === difficultyLevel.name
   );
 
+  const curCardAmount = difficultyLevel.cardAmt;
+
   console.log({ curDifficultyIndex });
 
   useEffect(() => {
@@ -65,6 +67,7 @@ function App() {
         <GameDisplay
           imagePool={imagePool}
           handleGameOver={setGameStatusToOver}
+          curCardAmount={curCardAmount}
         />
       )}
       {gameStatus === "over" && <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1>}

@@ -40,6 +40,15 @@ h1 {
   line-height: 1.1;
 }
 
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -61,6 +70,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
+    /* color: #f0e6d2; */
     color: #213547;
     background-color: #ffffff;
   }

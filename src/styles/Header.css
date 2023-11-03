@@ -17,9 +17,11 @@
   height: 5rem;
   width: auto;
   margin-right: -5px;
+  margin-left: auto;
 }
 
 .header-title > h1 {
   padding: 0;
   margin: 0;
+  margin-right: auto;
 }

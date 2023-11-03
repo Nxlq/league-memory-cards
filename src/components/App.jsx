@@ -26,7 +26,6 @@ function App() {
 
   return (
     <>
-      <Header />
       {gameStatus === "startScreen" && (
         <StartScreen handleStartGame={setGameStatusToPlaying} />
       )}

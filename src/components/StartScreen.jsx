@@ -1,20 +1,16 @@
 import "../styles/StartScreen.css";
 import Header from "./Header";
 
-function DifficultySelection({ handleDifficultySelect }) {
+function DifficultySelection({ handleDifficultySelect, difficulties }) {
   return (
     <div className="difficulty-selection__container">
       <h2>Select your game mode:</h2>
       <div className="difficulties__container">
-        <button onClick={(e) => handleDifficultySelect(e)}>Iron</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Bronze</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Silver</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Gold</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Platinum</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Diamond</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Master</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Grandmaster</button>
-        <button onClick={(e) => handleDifficultySelect(e)}>Challenger</button>
+        {difficulties.map((dif, i) => (
+          <button key={dif.name} onClick={() => handleDifficultySelect(i)}>
+            {dif.name}
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -26,10 +22,10 @@ function CurrentDifficultyDisplay({ difficultyLevel }) {
       <h2>Difficulty Selected:</h2>
       <img
         className="rank-image"
-        src={`src/assets/rank-icons/Rank=${difficultyLevel}.png`}
+        src={`src/assets/rank-icons/Rank=${difficultyLevel.name}.png`}
         alt="image of the players current rank"
       />
-      <h2>{difficultyLevel}</h2>
+      <h2>{difficultyLevel.name}</h2>
     </div>
   );
 }
@@ -52,6 +48,7 @@ export default function StartScreen({
   handleStartGame,
   difficultyLevel,
   handleDifficultySelect,
+  difficulties,
 }) {
   return (
     <div className="start-screen__container">
@@ -61,7 +58,10 @@ export default function StartScreen({
       </button>
       <div className="game-info__wrapper">
         <CurrentDifficultyDisplay difficultyLevel={difficultyLevel} />
-        <DifficultySelection handleDifficultySelect={handleDifficultySelect} />
+        <DifficultySelection
+          handleDifficultySelect={handleDifficultySelect}
+          difficulties={difficulties}
+        />
         <HighestRankDisplay />
       </div>
     </div>

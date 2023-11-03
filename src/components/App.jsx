@@ -8,8 +8,30 @@ import StartScreen from "./StartScreen";
 function App() {
   const [imagePool, setImagePool] = useState(null);
   const [gameStatus, setGameStatus] = useState("startScreen");
-  const [difficultyLevel, setDifficultyLevel] = useState("Iron");
+  const [difficultyLevel, setDifficultyLevel] = useState({
+    name: "Iron",
+    cardAmt: 3,
+  });
+
+  const DIFFICULTIES = [
+    { name: "Iron", cardAmt: 3 },
+    { name: "Bronze", cardAmt: 6 },
+    { name: "Silver", cardAmt: 9 },
+    { name: "Gold", cardAmt: 12 },
+    { name: "Platinum", cardAmt: 15 },
+    { name: "Diamond", cardAmt: 18 },
+    { name: "Master", cardAmt: 21 },
+    { name: "Grandmaster", cardAmt: 24 },
+    { name: "Challenger", cardAmt: 27 },
+  ];
+
   console.log({ imagePool });
+
+  const curDifficultyIndex = DIFFICULTIES.findIndex(
+    (dif) => dif.name === difficultyLevel.name
+  );
+
+  console.log({ curDifficultyIndex });
 
   useEffect(() => {
     if (!imagePool) {
@@ -25,9 +47,8 @@ function App() {
     setGameStatus("over");
   }
 
-  function handleDifficultySelect(e) {
-    console.log(e);
-    setDifficultyLevel(e.target.textContent);
+  function handleDifficultySelect(index) {
+    setDifficultyLevel(DIFFICULTIES[index]);
   }
 
   return (
@@ -37,6 +58,7 @@ function App() {
           handleStartGame={setGameStatusToPlaying}
           difficultyLevel={difficultyLevel}
           handleDifficultySelect={handleDifficultySelect}
+          difficulties={DIFFICULTIES}
         />
       )}
       {gameStatus === "playing" && (

@@ -24,7 +24,7 @@ function Card({ imgSrc, handleCardClick, id, isFlipped }) {
             src={imgSrc}
           ></img>
         </div>
-        <div className="back">Back of Card</div>
+        <div className="back"></div>
       </div>
     </div>
   );

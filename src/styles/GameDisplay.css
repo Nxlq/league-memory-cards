@@ -29,6 +29,7 @@
   /* width: auto; */
   /* height: 16rem; */
   border: solid 3px black;
+  /* border-radius: 3px; */
 }
 
 .card__wrapper {
@@ -36,6 +37,7 @@
   height: 16.7rem;
   /* padding-bottom: */
   perspective: 800px;
+  /* border-radius: 3px; */
 }
 
 .card__wrapper:hover > .card {
@@ -54,6 +56,7 @@
   position: relative;
   transition: transform 500ms ease-in-out;
   transform-style: preserve-3d;
+  /* border-radius: 3px; */
 }
 
 .front,
@@ -62,12 +65,16 @@
   width: 100%;
   position: absolute;
   backface-visibility: hidden;
+  /* border-radius: 3px; */
 }
 
 .back {
   border: solid 3px black;
   background-color: #030b13;
   transform: rotateY(180deg);
+  background-image: url(/src/assets/card-back.jpg);
+  background-size: cover;
+  background-position: center;
 }
 
 .invisible {

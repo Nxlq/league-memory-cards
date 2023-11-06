@@ -9,9 +9,12 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function Card({ imgSrc, handleCardClick, id }) {
+function Card({ imgSrc, handleCardClick, id, isFlipped }) {
   return (
-    <div className="card__wrapper" onClick={(e) => handleCardClick(e)}>
+    <div
+      className={`card__wrapper ${isFlipped ? "flipped" : null}`}
+      onClick={(e) => handleCardClick(e)}
+    >
       <div className="card">
         <div className="front">
           <img
@@ -27,7 +30,7 @@ function Card({ imgSrc, handleCardClick, id }) {
   );
 }
 
-function CardGrid({ displayedCards, handleCardClick }) {
+function CardGrid({ displayedCards, handleCardClick, isFlipped }) {
   console.log({ displayedCards });
 
   return (
@@ -39,6 +42,7 @@ function CardGrid({ displayedCards, handleCardClick }) {
             id={card.id}
             imgSrc={card.img}
             handleCardClick={handleCardClick}
+            isFlipped={isFlipped}
           />
         ))}
       </div>
@@ -68,15 +72,20 @@ export default function GameDisplay({
   const [isLoading, setIsLoading] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const cardGridNode = useRef(null);
+  // const cardGridNode = useRef(null);
 
-  function flipCardsToBack() {
-    const gridNode = cardGridNode.current;
-    const cardList = gridNode.querySelectorAll(".card__wrapper");
-    cardList.forEach((card) => card.classList.add("flipped"));
-  }
+  // function flipCardsToBack() {
+  //   const gridNode = cardGridNode.current;
+  //   const cardList = gridNode.querySelectorAll(".card__wrapper");
+  //   cardList.forEach((card) => card.classList.add("flipped"));
+  // }
 
-  if (isFlipped) flipCardsToBack();
+  // function unFlipCards() {
+  //   if (!cardGridNode.current) return;
+  //   const gridNode = cardGridNode.current;
+  //   const cardList = gridNode.querySelectorAll(".card__wrapper");
+  //   cardList.forEach((card) => card.classList.remove("flipped"));
+  // }
 
   useEffect(() => {
     if (isLoading) {
@@ -87,32 +96,7 @@ export default function GameDisplay({
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    if (isFlipped) {
-      setTimeout(() => {
-        const cards = document.querySelectorAll(".card__wrapper");
-        cards.forEach((card) => card.classList.remove("flipped"));
-        setIsFlipped(false);
-      }, 1000);
-    }
-  }, [isFlipped]);
-
-  // useEffect(() => {
-  //   if (isFlipped) {
-  //     // setTimeout(() => {
-
-  //     // }, 200);
-  //     const cards = document.querySelectorAll(".card__wrapper");
-  //     cards.forEach((card) => card.classList.add("flipped"));
-  //   }
-  // });
-
   const cardCount = displayedCards?.length;
-
-  if (isFlipped) {
-    const cards = document.querySelectorAll(".card__wrapper");
-    cards.forEach((card) => card.classList.add("flipped"));
-  }
 
   if (playerScore === cardCount) handleGameWin();
 
@@ -149,8 +133,8 @@ export default function GameDisplay({
   }
 
   function handleCardClick(e) {
+    //prevents user from clicking while flipping
     if (isFlipped) return;
-    console.log(e);
     const clickedCardIndex = displayedCards.findIndex(
       (card) => card.id === e.target.id
     );
@@ -161,13 +145,19 @@ export default function GameDisplay({
     const updatedCards = [...displayedCards];
     updatedCards[clickedCardIndex].clicked = true;
 
-    console.log({ playerScore, cardCount });
-
-    console.log(true);
+    const newCardsToDisplay = shuffleCards(updatedCards);
 
     setPlayerScore(playerScore + 1);
-    setdisplayedCards(updatedCards);
+
+    setTimeout(() => {
+      setdisplayedCards(newCardsToDisplay);
+    }, 600);
+
     setIsFlipped(true);
+
+    setTimeout(() => {
+      setIsFlipped(false);
+    }, 1000);
   }
 
   function handleGameWin() {
@@ -181,10 +171,11 @@ export default function GameDisplay({
       {!isLoading ? (
         <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
       ) : null}
-      <div ref={cardGridNode} className="card-grid__wrapper">
+      <div className="card-grid__wrapper">
         <CardGrid
           displayedCards={displayedCards}
           handleCardClick={handleCardClick}
+          isFlipped={isFlipped}
         />
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/GameDisplay.css";
 import LoadingBar from "./LoadingScreen";
 import Header from "./Header";
@@ -11,14 +11,18 @@ function getRandomIntInclusive(min, max) {
 
 function Card({ imgSrc, handleCardClick, id }) {
   return (
-    <div className="card">
-      <img
-        draggable="false"
-        onClick={(e) => handleCardClick(e)}
-        id={id}
-        className="card-img"
-        src={imgSrc}
-      ></img>
+    <div className="card__wrapper" onClick={(e) => handleCardClick(e)}>
+      <div className="card">
+        <div className="front">
+          <img
+            draggable="false"
+            id={id}
+            className="card-img"
+            src={imgSrc}
+          ></img>
+        </div>
+        <div className="back">Back of Card</div>
+      </div>
     </div>
   );
 }
@@ -62,6 +66,17 @@ export default function GameDisplay({
   );
   const [playerScore, setPlayerScore] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const cardGridNode = useRef(null);
+
+  function flipCardsToBack() {
+    const gridNode = cardGridNode.current;
+    const cardList = gridNode.querySelectorAll(".card__wrapper");
+    cardList.forEach((card) => card.classList.add("flipped"));
+  }
+
+  if (isFlipped) flipCardsToBack();
 
   useEffect(() => {
     if (isLoading) {
@@ -72,7 +87,34 @@ export default function GameDisplay({
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (isFlipped) {
+      setTimeout(() => {
+        const cards = document.querySelectorAll(".card__wrapper");
+        cards.forEach((card) => card.classList.remove("flipped"));
+        setIsFlipped(false);
+      }, 1000);
+    }
+  }, [isFlipped]);
+
+  // useEffect(() => {
+  //   if (isFlipped) {
+  //     // setTimeout(() => {
+
+  //     // }, 200);
+  //     const cards = document.querySelectorAll(".card__wrapper");
+  //     cards.forEach((card) => card.classList.add("flipped"));
+  //   }
+  // });
+
   const cardCount = displayedCards?.length;
+
+  if (isFlipped) {
+    const cards = document.querySelectorAll(".card__wrapper");
+    cards.forEach((card) => card.classList.add("flipped"));
+  }
+
+  if (playerScore === cardCount) handleGameWin();
 
   function selectRandomImages(amountToSelect) {
     if (!imagePool) return;
@@ -107,19 +149,29 @@ export default function GameDisplay({
   }
 
   function handleCardClick(e) {
+    if (isFlipped) return;
+    console.log(e);
     const clickedCardIndex = displayedCards.findIndex(
       (card) => card.id === e.target.id
     );
+    console.log({ clickedCardIndex });
 
     if (displayedCards[clickedCardIndex].clicked) return handleGameOver();
 
     const updatedCards = [...displayedCards];
     updatedCards[clickedCardIndex].clicked = true;
 
-    const newCardsToDisplay = shuffleCards(updatedCards);
+    console.log({ playerScore, cardCount });
 
-    setdisplayedCards(newCardsToDisplay);
+    console.log(true);
+
     setPlayerScore(playerScore + 1);
+    setdisplayedCards(updatedCards);
+    setIsFlipped(true);
+  }
+
+  function handleGameWin() {
+    console.log("won");
   }
 
   return (
@@ -129,7 +181,7 @@ export default function GameDisplay({
       {!isLoading ? (
         <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
       ) : null}
-      <div className="card-grid__wrapper">
+      <div ref={cardGridNode} className="card-grid__wrapper">
         <CardGrid
           displayedCards={displayedCards}
           handleCardClick={handleCardClick}

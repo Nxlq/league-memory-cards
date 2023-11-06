@@ -12,6 +12,7 @@ function App() {
     name: "Iron",
     cardAmt: 3,
   });
+  const [highestRankAcheived, setHighestRankAcheived] = useState("Iron");
 
   const DIFFICULTIES = [
     { name: "Iron", cardAmt: 3 },
@@ -35,11 +36,25 @@ function App() {
 
   console.log({ curDifficultyIndex });
 
+  // handling the imagePool fetching
   useEffect(() => {
     if (!imagePool) {
       fetchAllSplashArts().then((res) => setImagePool(res));
     }
   }, [imagePool]);
+
+  // syncing the user's highest rank achieved to local storage
+  // useEffect(() => {
+  //   localStorage.setItem("highestRankAchieved", highestRankAcheived);
+  // }, [highestRankAcheived]);
+
+  // grabbing the user's highest rank achieved from local storage
+  // useEffect(() => {
+  //   const highestRankInStorage = localStorage.getItem("highestRankAchieved");
+  //   if (highestRankAcheived !== highestRankInStorage) {
+  //     setHighestRankAcheived(highestRankInStorage);
+  //   }
+  // }, [highestRankAcheived]);
 
   function setGameStatusToPlaying() {
     setGameStatus("playing");

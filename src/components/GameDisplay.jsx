@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "../styles/GameDisplay.css";
 import LoadingBar from "./LoadingScreen";
 import Header from "./Header";
+import cardFlipSound from "../assets/sounds/card-flip-sound.mp3";
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -175,15 +176,19 @@ export default function GameDisplay({
       setdisplayedCards(newCardsToDisplay);
     }, 600);
 
+    playCardFlipSound();
     setIsFlipped(true);
 
     unflipTimeout = setTimeout(() => {
       setIsFlipped(false);
+      playCardFlipSound();
     }, 1000);
   }
 
-  function handleGameWin() {
-    console.log("won");
+  function playCardFlipSound() {
+    const sound = new Audio(cardFlipSound);
+    sound.playbackRate = 1.3;
+    sound.play();
   }
 
   return (

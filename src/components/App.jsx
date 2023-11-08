@@ -28,10 +28,7 @@ function App() {
 
   console.log({ imagePool });
 
-  const curDifficultyIndex = DIFFICULTIES.findIndex(
-    (dif) => dif.name === difficultyLevel.name
-  );
-
+  const curDifficultyIndex = findDifficultyIndex(difficultyLevel.name);
   const curCardAmount = difficultyLevel.cardAmt;
 
   console.log({ curDifficultyIndex });
@@ -66,6 +63,10 @@ function App() {
 
   function handleDifficultySelect(index) {
     setDifficultyLevel(DIFFICULTIES[index]);
+  }
+
+  function findDifficultyIndex(difficultyName) {
+    return DIFFICULTIES.findIndex((dif) => dif.name === difficultyName);
   }
 
   return (

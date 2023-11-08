@@ -105,8 +105,18 @@ export default function GameDisplay({
     const randomImages = [];
 
     for (let i = 0; i < amountToSelect; i++) {
-      const randomIndex = getRandomIntInclusive(0, imagePool.length - 1);
+      let randomIndex = getRandomIntInclusive(0, imagePool.length - 1);
+
+      // if the randomIndex is a duplicate, then keep selecting another one until it is not
+      while (
+        randomImages.some((imgObj) => imgObj.id === imagePool[randomIndex].id)
+      ) {
+        randomIndex = getRandomIntInclusive(0, imagePool.length - 1);
+        console.log("duplicate prevented");
+      }
+
       const randomImageObj = { ...imagePool[randomIndex], clicked: false };
+      console.log({ randomImageObj });
       randomImages.push(randomImageObj);
     }
 

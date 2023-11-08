@@ -4,6 +4,7 @@ import fetchAllSplashArts from "../leagueData";
 import GameDisplay from "./GameDisplay";
 import StartScreen from "./StartScreen";
 import VictoryScreen from "./VictoryScreen";
+import GameOverScreen from "./GameOverScreen";
 
 function App() {
   const [imagePool, setImagePool] = useState(null);
@@ -107,7 +108,9 @@ function App() {
           handleVictory={handleVictory}
         />
       )}
-      {gameStatus === "over" && <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1>}
+      {gameStatus === "over" && (
+        <GameOverScreen goToStartScreen={setGameStatusToStartScreen} />
+      )}
       {gameStatus === "victory" && (
         <VictoryScreen
           goToStartScreen={setGameStatusToStartScreen}

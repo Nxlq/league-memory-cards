@@ -73,6 +73,10 @@ export default function GameDisplay({
   const [isLoading, setIsLoading] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
 
+  const cardCount = displayedCards?.length;
+  let displayTimeout;
+  let unflipTimeout;
+
   // const cardGridNode = useRef(null);
 
   // function flipCardsToBack() {
@@ -97,9 +101,13 @@ export default function GameDisplay({
     }
   }, [isLoading]);
 
-  const cardCount = displayedCards?.length;
-
-  if (playerScore === cardCount) handleVictory();
+  useEffect(() => {
+    if (playerScore === cardCount) {
+      clearTimeout(displayTimeout);
+      clearTimeout(unflipTimeout);
+      handleVictory();
+    }
+  });
 
   function selectRandomImages(amountToSelect) {
     if (!imagePool) return;
@@ -160,13 +168,13 @@ export default function GameDisplay({
 
     setPlayerScore(playerScore + 1);
 
-    setTimeout(() => {
+    displayTimeout = setTimeout(() => {
       setdisplayedCards(newCardsToDisplay);
     }, 600);
 
     setIsFlipped(true);
 
-    setTimeout(() => {
+    unflipTimeout = setTimeout(() => {
       setIsFlipped(false);
     }, 1000);
   }

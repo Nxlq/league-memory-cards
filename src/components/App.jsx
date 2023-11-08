@@ -54,6 +54,9 @@ function App() {
   //   }
   // }, [highestRankAcheived]);
 
+  function setGameStatusToStartScreen() {
+    setGameStatus("startScreen");
+  }
   function setGameStatusToPlaying() {
     setGameStatus("playing");
   }
@@ -64,6 +67,12 @@ function App() {
 
   function setGameStatusToVictory() {
     setGameStatus("victory");
+  }
+
+  function handleVictory() {
+    localStorage.setItem("highestRankCompleted", difficultyLevel.name);
+    setHighestRankAcheived(difficultyLevel.name);
+    setGameStatusToVictory();
   }
 
   function handleDifficultySelect(index) {
@@ -89,11 +98,16 @@ function App() {
           imagePool={imagePool}
           handleGameOver={setGameStatusToOver}
           curCardAmount={curCardAmount}
-          handleVictory={setGameStatusToVictory}
+          handleVictory={handleVictory}
         />
       )}
       {gameStatus === "over" && <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1>}
-      {gameStatus === "victory" && <VictoryScreen />}
+      {gameStatus === "victory" && (
+        <VictoryScreen
+          goToStartScreen={setGameStatusToStartScreen}
+          attemptedDifficulty={difficultyLevel}
+        />
+      )}
     </>
   );
 }

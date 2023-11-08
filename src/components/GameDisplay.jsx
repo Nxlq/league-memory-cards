@@ -3,6 +3,8 @@ import "../styles/GameDisplay.css";
 import LoadingBar from "./LoadingScreen";
 import Header from "./Header";
 import cardFlipSound from "../assets/sounds/card-flip-sound.mp3";
+import victorySound from "../assets/sounds/victory-sound.mp3";
+import defeatSound from "../assets/sounds/fail-sound.mp3";
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -106,9 +108,23 @@ export default function GameDisplay({
     if (playerScore === cardCount) {
       clearTimeout(displayTimeout);
       clearTimeout(unflipTimeout);
+      playVictorySound();
       handleVictory();
     }
   });
+
+  function playVictorySound() {
+    const sound = new Audio(victorySound);
+    sound.volume = 0.6;
+    sound.playbackRate = 1.1;
+    sound.play();
+  }
+
+  function playDefeatSound() {
+    const sound = new Audio(defeatSound);
+    sound.volume = 0.7;
+    sound.play();
+  }
 
   function selectRandomImages(amountToSelect) {
     if (!imagePool) return;
@@ -163,7 +179,11 @@ export default function GameDisplay({
     );
     console.log({ clickedCardIndex });
 
-    if (displayedCards[clickedCardIndex].clicked) return handleGameOver();
+    if (displayedCards[clickedCardIndex].clicked) {
+      playDefeatSound();
+      handleGameOver();
+      return;
+    }
 
     const updatedCards = [...displayedCards];
     updatedCards[clickedCardIndex].clicked = true;
@@ -186,6 +206,7 @@ export default function GameDisplay({
   }
 
   function playCardFlipSound() {
+    if (playerScore + 1 === cardCount) return;
     const sound = new Audio(cardFlipSound);
     sound.playbackRate = 1.3;
     sound.play();

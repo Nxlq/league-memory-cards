@@ -5,6 +5,7 @@ import GameDisplay from "./GameDisplay";
 import StartScreen from "./StartScreen";
 import VictoryScreen from "./VictoryScreen";
 import GameOverScreen from "./GameOverScreen";
+import victorySound from "../assets/sounds/victory-sound.mp3";
 
 function App() {
   const [imagePool, setImagePool] = useState(null);
@@ -129,6 +130,7 @@ function App() {
           goToStartScreen={setGameStatusToStartScreen}
           attemptedDifficulty={difficultyLevel}
           attemptNextRank={handleNextRankBtn}
+          victorySound={victorySound}
         />
       )}
     </>

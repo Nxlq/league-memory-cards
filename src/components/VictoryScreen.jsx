@@ -3,6 +3,7 @@ import "../styles/VictoryScreen.css";
 export default function VictoryScreen({
   goToStartScreen,
   attemptedDifficulty,
+  attemptNextRank,
 }) {
   return (
     <div className="victory-screen">
@@ -13,7 +14,7 @@ export default function VictoryScreen({
       <p>Not bad bucko 🥴 Where would you like to go next?</p>
       <div className="btns__container">
         <button onClick={goToStartScreen}>Main menu</button>
-        <button>Next rank</button>
+        <button onClick={attemptNextRank}>Next rank</button>
       </div>
     </div>
   );

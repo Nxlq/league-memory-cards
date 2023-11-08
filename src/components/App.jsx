@@ -93,6 +93,12 @@ function App() {
     setGameStatusToPlaying();
   }
 
+  function handleNextRankBtn() {
+    const nextDifficulty = DIFFICULTIES[curDifficultyIndex + 1];
+    setDifficultyLevel(nextDifficulty);
+    setGameStatusToPlaying();
+  }
+
   return (
     <>
       {gameStatus === "startScreen" && (
@@ -122,6 +128,7 @@ function App() {
         <VictoryScreen
           goToStartScreen={setGameStatusToStartScreen}
           attemptedDifficulty={difficultyLevel}
+          attemptNextRank={handleNextRankBtn}
         />
       )}
     </>

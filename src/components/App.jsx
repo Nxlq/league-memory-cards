@@ -89,6 +89,10 @@ function App() {
     return DIFFICULTIES.findIndex((dif) => dif.name === difficultyName);
   }
 
+  function handleTryAgain() {
+    setGameStatusToPlaying();
+  }
+
   return (
     <>
       {gameStatus === "startScreen" && (
@@ -109,7 +113,10 @@ function App() {
         />
       )}
       {gameStatus === "over" && (
-        <GameOverScreen goToStartScreen={setGameStatusToStartScreen} />
+        <GameOverScreen
+          goToStartScreen={setGameStatusToStartScreen}
+          handleTryAgain={handleTryAgain}
+        />
       )}
       {gameStatus === "victory" && (
         <VictoryScreen

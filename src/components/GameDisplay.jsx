@@ -118,7 +118,10 @@ export default function GameDisplay({
 
       // if the randomIndex is a duplicate, then keep selecting another one until it is not
       while (
-        randomImages.some((imgObj) => imgObj.id === imagePool[randomIndex].id)
+        randomImages.some(
+          (imgObj) => imgObj.id === imagePool[randomIndex].id
+        ) ||
+        imagePool[randomIndex] == null
       ) {
         randomIndex = getRandomIntInclusive(0, imagePool.length - 1);
         console.log("duplicate prevented");

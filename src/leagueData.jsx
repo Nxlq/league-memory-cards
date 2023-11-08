@@ -47,6 +47,8 @@ export default async function fetchAllSplashArts() {
     console.log({ champInfo });
 
     const allSkins = champInfo.skins.map((skin) => {
+      if (skin.id == "9009" || skin.id == "9027") return null;
+
       return {
         img: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champInfo.id}_${skin.num}.jpg`,
         id: skin.id,

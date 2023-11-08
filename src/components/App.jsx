@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "/src/styles/App.css";
-import Header from "./Header";
 import fetchAllSplashArts from "../leagueData";
 import GameDisplay from "./GameDisplay";
 import StartScreen from "./StartScreen";
@@ -14,6 +13,8 @@ function App() {
     cardAmt: 3,
   });
   const [highestRankAcheived, setHighestRankAcheived] = useState("Iron");
+
+  console.log({ highestRankAcheived }, "FROM APP");
 
   const DIFFICULTIES = [
     { name: "Iron", cardAmt: 3 },
@@ -29,8 +30,12 @@ function App() {
 
   console.log({ imagePool });
 
-  const curDifficultyIndex = findDifficultyIndex(difficultyLevel.name);
   const curCardAmount = difficultyLevel.cardAmt;
+  const curDifficultyIndex = findDifficultyIndex(difficultyLevel.name);
+  const curHighestRankIndex = findDifficultyIndex(highestRankAcheived);
+  const highestRankInStorage = localStorage.getItem("highestRankCompleted");
+  const storageRankIndex = findDifficultyIndex(highestRankInStorage);
+  console.log({ highestRankInStorage });
 
   console.log({ curDifficultyIndex });
 
@@ -41,18 +46,12 @@ function App() {
     }
   }, [imagePool]);
 
-  // syncing the user's highest rank achieved to local storage
-  // useEffect(() => {
-  //   localStorage.setItem("highestRankAchieved", highestRankAcheived);
-  // }, [highestRankAcheived]);
-
-  // grabbing the user's highest rank achieved from local storage
-  // useEffect(() => {
-  //   const highestRankInStorage = localStorage.getItem("highestRankAchieved");
-  //   if (highestRankAcheived !== highestRankInStorage) {
-  //     setHighestRankAcheived(highestRankInStorage);
-  //   }
-  // }, [highestRankAcheived]);
+  //syncing the user's highest rank achieved from local storage
+  useEffect(() => {
+    if (storageRankIndex > curHighestRankIndex) {
+      setHighestRankAcheived(highestRankInStorage);
+    }
+  }, [curHighestRankIndex, highestRankInStorage, storageRankIndex]);
 
   function setGameStatusToStartScreen() {
     setGameStatus("startScreen");
@@ -70,8 +69,14 @@ function App() {
   }
 
   function handleVictory() {
-    localStorage.setItem("highestRankCompleted", difficultyLevel.name);
-    setHighestRankAcheived(difficultyLevel.name);
+    const highestRankInStorage = localStorage.getItem("highestRankCompleted");
+    const storageRankIndex = findDifficultyIndex(highestRankInStorage);
+    const completedRankIndex = findDifficultyIndex(difficultyLevel.name);
+
+    if (completedRankIndex > storageRankIndex) {
+      localStorage.setItem("highestRankCompleted", difficultyLevel.name);
+      setHighestRankAcheived(difficultyLevel.name);
+    }
     setGameStatusToVictory();
   }
 
@@ -91,6 +96,7 @@ function App() {
           difficultyLevel={difficultyLevel}
           handleDifficultySelect={handleDifficultySelect}
           difficulties={DIFFICULTIES}
+          highestRankAchieved={highestRankAcheived}
         />
       )}
       {gameStatus === "playing" && (

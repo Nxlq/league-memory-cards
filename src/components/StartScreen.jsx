@@ -30,16 +30,17 @@ function CurrentDifficultyDisplay({ difficultyLevel }) {
   );
 }
 
-function HighestRankDisplay() {
+function HighestRankDisplay({ highestRankAchieved }) {
+  console.log({ highestRankAchieved });
   return (
     <div className="rank-display__container">
       <h2>Your Highest Rank:</h2>
       <img
         className="rank-image"
-        src="src/assets/rank-icons/Rank=Iron.png"
+        src={`src/assets/rank-icons/Rank=${highestRankAchieved}.png`}
         alt="image of the players current rank"
       />
-      <h2>Iron</h2>
+      <h2>{highestRankAchieved}</h2>
     </div>
   );
 }
@@ -49,6 +50,7 @@ export default function StartScreen({
   difficultyLevel,
   handleDifficultySelect,
   difficulties,
+  highestRankAchieved,
 }) {
   return (
     <div className="start-screen__container">
@@ -62,7 +64,7 @@ export default function StartScreen({
           handleDifficultySelect={handleDifficultySelect}
           difficulties={difficulties}
         />
-        <HighestRankDisplay />
+        <HighestRankDisplay highestRankAchieved={highestRankAchieved} />
       </div>
     </div>
   );

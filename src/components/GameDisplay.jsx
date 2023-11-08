@@ -64,6 +64,7 @@ export default function GameDisplay({
   imagePool,
   handleGameOver,
   curCardAmount,
+  handleVictory,
 }) {
   const [displayedCards, setdisplayedCards] = useState(
     selectRandomImages(curCardAmount)
@@ -98,7 +99,7 @@ export default function GameDisplay({
 
   const cardCount = displayedCards?.length;
 
-  if (playerScore === cardCount) handleGameWin();
+  if (playerScore === cardCount) handleVictory();
 
   function selectRandomImages(amountToSelect) {
     if (!imagePool) return;

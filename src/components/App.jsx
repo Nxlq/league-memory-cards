@@ -4,6 +4,7 @@ import Header from "./Header";
 import fetchAllSplashArts from "../leagueData";
 import GameDisplay from "./GameDisplay";
 import StartScreen from "./StartScreen";
+import VictoryScreen from "./VictoryScreen";
 
 function App() {
   const [imagePool, setImagePool] = useState(null);
@@ -61,6 +62,10 @@ function App() {
     setGameStatus("over");
   }
 
+  function setGameStatusToVictory() {
+    setGameStatus("victory");
+  }
+
   function handleDifficultySelect(index) {
     setDifficultyLevel(DIFFICULTIES[index]);
   }
@@ -84,9 +89,11 @@ function App() {
           imagePool={imagePool}
           handleGameOver={setGameStatusToOver}
           curCardAmount={curCardAmount}
+          handleVictory={setGameStatusToVictory}
         />
       )}
       {gameStatus === "over" && <h1>GAME OVER 🤡🤜🤛👹 YOU SUCK</h1>}
+      {gameStatus === "victory" && <VictoryScreen />}
     </>
   );
 }

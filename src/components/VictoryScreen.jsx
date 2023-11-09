@@ -22,14 +22,16 @@ export default function VictoryScreen({
         >
           Main menu
         </button>
-        <button
-          onClick={() => {
-            playClickSound();
-            attemptNextRank();
-          }}
-        >
-          Next rank
-        </button>
+        {attemptedDifficulty.name === "Challenger" ? null : (
+          <button
+            onClick={() => {
+              playClickSound();
+              attemptNextRank();
+            }}
+          >
+            Next rank
+          </button>
+        )}
       </div>
     </div>
   );

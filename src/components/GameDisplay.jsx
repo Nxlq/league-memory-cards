@@ -35,8 +35,6 @@ function Card({ imgSrc, handleCardClick, id, isFlipped }) {
 }
 
 function CardGrid({ displayedCards, handleCardClick, isFlipped }) {
-  console.log({ displayedCards });
-
   return (
     <>
       <div className="card-grid invisible">
@@ -159,11 +157,10 @@ export default function GameDisplay({
         imagePool[randomIndex] == null
       ) {
         randomIndex = getRandomIntInclusive(0, imagePool.length - 1);
-        console.log("duplicate prevented");
+        // console.log("duplicate prevented");
       }
 
       const randomImageObj = { ...imagePool[randomIndex], clicked: false };
-      console.log({ randomImageObj });
       randomImages.push(randomImageObj);
     }
 
@@ -195,7 +192,6 @@ export default function GameDisplay({
     const clickedCardIndex = displayedCards.findIndex(
       (card) => card.id === e.target.id
     );
-    console.log({ clickedCardIndex });
 
     if (displayedCards[clickedCardIndex].clicked) {
       music.pause();

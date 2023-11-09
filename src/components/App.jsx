@@ -16,8 +16,6 @@ function App() {
   });
   const [highestRankAcheived, setHighestRankAcheived] = useState("Iron");
 
-  console.log({ highestRankAcheived }, "FROM APP");
-
   const DIFFICULTIES = [
     { name: "Iron", cardAmt: 3 },
     { name: "Bronze", cardAmt: 6 },
@@ -30,16 +28,11 @@ function App() {
     { name: "Challenger", cardAmt: 27 },
   ];
 
-  console.log({ imagePool });
-
   const curCardAmount = difficultyLevel.cardAmt;
   const curDifficultyIndex = findDifficultyIndex(difficultyLevel.name);
   const curHighestRankIndex = findDifficultyIndex(highestRankAcheived);
   const highestRankInStorage = localStorage.getItem("highestRankCompleted");
   const storageRankIndex = findDifficultyIndex(highestRankInStorage);
-  console.log({ highestRankInStorage });
-
-  console.log({ curDifficultyIndex });
 
   // handling the imagePool fetching
   useEffect(() => {

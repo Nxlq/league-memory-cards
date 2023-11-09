@@ -41,7 +41,6 @@ function CurrentDifficultyDisplay({ difficultyLevel }) {
 }
 
 function HighestRankDisplay({ highestRankAchieved }) {
-  console.log({ highestRankAchieved });
   return (
     <div className="rank-display__container">
       <h2>Your Highest Rank:</h2>

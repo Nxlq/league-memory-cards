@@ -26,6 +26,7 @@ function App() {
     { name: "Master", cardAmt: 21 },
     { name: "Grandmaster", cardAmt: 24 },
     { name: "Challenger", cardAmt: 27 },
+    { name: "Rank 1", cardAmt: 36 },
   ];
 
   const curCardAmount = difficultyLevel.cardAmt;

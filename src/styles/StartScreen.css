@@ -26,6 +26,7 @@
   border-bottom: solid #5b5a56 1px;
   width: 100%;
   padding-bottom: 2rem;
+  color: var(--font-color);
 }
 
 .game-info__wrapper {

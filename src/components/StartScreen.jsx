@@ -32,7 +32,7 @@ function CurrentDifficultyDisplay({ difficultyLevel }) {
       <h2>Difficulty Selected:</h2>
       <img
         className="rank-image"
-        src={`src/assets/rank-icons/Rank=${difficultyLevel.name}.png`}
+        src={`/rank-icons/Rank=${difficultyLevel.name}.png`}
         alt="image of the players current rank"
       />
       <h2>{difficultyLevel.name}</h2>
@@ -46,7 +46,7 @@ function HighestRankDisplay({ highestRankAchieved }) {
       <h2>Your Highest Rank:</h2>
       <img
         className="rank-image"
-        src={`src/assets/rank-icons/Rank=${highestRankAchieved}.png`}
+        src={`/rank-icons/Rank=${highestRankAchieved}.png`}
         alt="image of the players current rank"
       />
       <h2>{highestRankAchieved}</h2>

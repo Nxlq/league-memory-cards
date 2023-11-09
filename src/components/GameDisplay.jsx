@@ -128,8 +128,10 @@ export default function GameDisplay({
   }, [isMusicPlaying, music]);
 
   useEffect(() => {
-    music.addEventListener("ended", () => music.play());
-  });
+    if (!isLoading) {
+      music.addEventListener("ended", () => music.play());
+    }
+  }, [isMusicPlaying, music, isLoading]);
 
   function playVictorySound() {
     const sound = new Audio(victorySound);
@@ -231,6 +233,14 @@ export default function GameDisplay({
 
   return (
     <>
+      {!isLoading ? (
+        <button
+          onClick={() => setIsMusicPlaying(!isMusicPlaying)}
+          id="mute-btn"
+        >
+          {isMusicPlaying ? "mute" : "unmute"}
+        </button>
+      ) : null}
       <Header />
       {isLoading ? <LoadingBar /> : null}
       {!isLoading ? (

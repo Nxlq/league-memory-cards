@@ -121,6 +121,7 @@ function App() {
           handleGameOver={setGameStatusToOver}
           curCardAmount={curCardAmount}
           handleVictory={handleVictory}
+          curDifficultyName={difficultyLevel.name}
         />
       )}
       {gameStatus === "over" && (

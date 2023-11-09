@@ -52,12 +52,13 @@ function CardGrid({ displayedCards, handleCardClick, isFlipped }) {
   );
 }
 
-function ScoreBoard({ cardCount, playerScore }) {
+function ScoreBoard({ cardCount, playerScore, curDifficultyName }) {
   return (
     <div className="scoreboard">
       <h2>
         Score: {playerScore}/{cardCount}
       </h2>
+      <h2>Difficulty: {curDifficultyName}</h2>
     </div>
   );
 }
@@ -67,6 +68,7 @@ export default function GameDisplay({
   handleGameOver,
   curCardAmount,
   handleVictory,
+  curDifficultyName,
 }) {
   const [displayedCards, setdisplayedCards] = useState(
     selectRandomImages(curCardAmount)
@@ -232,7 +234,11 @@ export default function GameDisplay({
       <Header />
       {isLoading ? <LoadingBar /> : null}
       {!isLoading ? (
-        <ScoreBoard cardCount={cardCount} playerScore={playerScore} />
+        <ScoreBoard
+          cardCount={cardCount}
+          playerScore={playerScore}
+          curDifficultyName={curDifficultyName}
+        />
       ) : null}
       <div className="card-grid__wrapper">
         <CardGrid

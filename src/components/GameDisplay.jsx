@@ -127,6 +127,10 @@ export default function GameDisplay({
     }
   }, [isMusicPlaying, music]);
 
+  useEffect(() => {
+    music.addEventListener("ended", () => music.play());
+  });
+
   function playVictorySound() {
     const sound = new Audio(victorySound);
     sound.volume = 0.6;

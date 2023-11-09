@@ -22,7 +22,7 @@ export default function VictoryScreen({
         >
           Main menu
         </button>
-        {attemptedDifficulty.name === "Challenger" ? null : (
+        {attemptedDifficulty.name === "Rank 1" ? null : (
           <button
             onClick={() => {
               playClickSound();

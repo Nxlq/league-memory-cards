@@ -1,6 +1,7 @@
 async function fetchChampionsList() {
   const response = await fetch(
-    "http://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion.json"
+    "http://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion.json",
+    { mode: "cors" }
   );
 
   const championsList = await response.json();
@@ -12,7 +13,8 @@ async function fetchChampionsDetails(championsList) {
   for (const champion in championsList.data) {
     promises.push(
       fetch(
-        `http://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion/${champion}.json`
+        `http://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion/${champion}.json`,
+        { mode: "cors" }
       )
     );
   }
@@ -44,7 +46,7 @@ export default async function fetchAllSplashArts() {
       if (skin.id == "9009" || skin.id == "9027") return null;
 
       return {
-        img: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champInfo.id}_${skin.num}.jpg`,
+        img: `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champInfo.id}_${skin.num}.jpg`,
         id: skin.id,
       };
     });

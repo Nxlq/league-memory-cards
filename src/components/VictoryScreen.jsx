@@ -4,6 +4,7 @@ export default function VictoryScreen({
   goToStartScreen,
   attemptedDifficulty,
   attemptNextRank,
+  playClickSound,
 }) {
   return (
     <div className="victory-screen">
@@ -13,8 +14,22 @@ export default function VictoryScreen({
       </div>
       <p>Not bad bucko 🥴 Where would you like to go next?</p>
       <div className="btns__container">
-        <button onClick={goToStartScreen}>Main menu</button>
-        <button onClick={attemptNextRank}>Next rank</button>
+        <button
+          onClick={() => {
+            playClickSound();
+            goToStartScreen();
+          }}
+        >
+          Main menu
+        </button>
+        <button
+          onClick={() => {
+            playClickSound();
+            attemptNextRank();
+          }}
+        >
+          Next rank
+        </button>
       </div>
     </div>
   );

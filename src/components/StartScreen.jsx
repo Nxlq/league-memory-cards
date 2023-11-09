@@ -1,13 +1,23 @@
 import "../styles/StartScreen.css";
 import Header from "./Header";
 
-function DifficultySelection({ handleDifficultySelect, difficulties }) {
+function DifficultySelection({
+  handleDifficultySelect,
+  difficulties,
+  playClickSound,
+}) {
   return (
     <div className="difficulty-selection__container">
       <h2>Select your game mode:</h2>
       <div className="difficulties__container">
         {difficulties.map((dif, i) => (
-          <button key={dif.name} onClick={() => handleDifficultySelect(i)}>
+          <button
+            key={dif.name}
+            onClick={() => {
+              playClickSound();
+              handleDifficultySelect(i);
+            }}
+          >
             {dif.name}
           </button>
         ))}
@@ -51,11 +61,18 @@ export default function StartScreen({
   handleDifficultySelect,
   difficulties,
   highestRankAchieved,
+  playClickSound,
 }) {
   return (
     <div className="start-screen__container">
       <Header />
-      <button className="start-btn" onClick={handleStartGame}>
+      <button
+        className="start-btn"
+        onClick={() => {
+          playClickSound();
+          handleStartGame();
+        }}
+      >
         Play
       </button>
       <div className="game-info__wrapper">
@@ -63,6 +80,7 @@ export default function StartScreen({
         <DifficultySelection
           handleDifficultySelect={handleDifficultySelect}
           difficulties={difficulties}
+          playClickSound={playClickSound}
         />
         <HighestRankDisplay highestRankAchieved={highestRankAchieved} />
       </div>

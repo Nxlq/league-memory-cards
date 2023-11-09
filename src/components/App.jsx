@@ -5,7 +5,7 @@ import GameDisplay from "./GameDisplay";
 import StartScreen from "./StartScreen";
 import VictoryScreen from "./VictoryScreen";
 import GameOverScreen from "./GameOverScreen";
-import victorySound from "../assets/sounds/victory-sound.mp3";
+import clickSound from "../assets/sounds/click-sound.mp3";
 
 function App() {
   const [imagePool, setImagePool] = useState(null);
@@ -55,6 +55,10 @@ function App() {
     }
   }, [curHighestRankIndex, highestRankInStorage, storageRankIndex]);
 
+  // useEffect(() => {
+  //   music.addEventListener("ended", () => music.play());
+  // });
+
   function setGameStatusToStartScreen() {
     setGameStatus("startScreen");
   }
@@ -100,6 +104,12 @@ function App() {
     setGameStatusToPlaying();
   }
 
+  function playClickSound() {
+    const sound = new Audio(clickSound);
+    sound.playbackRate = 1.7;
+    sound.play();
+  }
+
   return (
     <>
       {gameStatus === "startScreen" && (
@@ -109,6 +119,7 @@ function App() {
           handleDifficultySelect={handleDifficultySelect}
           difficulties={DIFFICULTIES}
           highestRankAchieved={highestRankAcheived}
+          playClickSound={playClickSound}
         />
       )}
       {gameStatus === "playing" && (
@@ -123,6 +134,7 @@ function App() {
         <GameOverScreen
           goToStartScreen={setGameStatusToStartScreen}
           handleTryAgain={handleTryAgain}
+          playClickSound={playClickSound}
         />
       )}
       {gameStatus === "victory" && (
@@ -130,7 +142,7 @@ function App() {
           goToStartScreen={setGameStatusToStartScreen}
           attemptedDifficulty={difficultyLevel}
           attemptNextRank={handleNextRankBtn}
-          victorySound={victorySound}
+          playClickSound={playClickSound}
         />
       )}
     </>

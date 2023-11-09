@@ -5,6 +5,7 @@ import Header from "./Header";
 import cardFlipSound from "../assets/sounds/card-flip-sound.mp3";
 import victorySound from "../assets/sounds/victory-sound.mp3";
 import defeatSound from "../assets/sounds/fail-sound.mp3";
+import epicBackgroundSong from "../assets/sounds/epic-background-song.mp3";
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -75,6 +76,8 @@ export default function GameDisplay({
   const [playerScore, setPlayerScore] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [music] = useState(new Audio(epicBackgroundSong));
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
   const cardCount = displayedCards?.length;
   let displayTimeout;
@@ -100,6 +103,7 @@ export default function GameDisplay({
       setTimeout(() => {
         document.querySelector(".card-grid").classList.remove("invisible");
         setIsLoading(false);
+        setIsMusicPlaying(true);
       }, 1000);
     }
   }, [isLoading]);
@@ -108,10 +112,15 @@ export default function GameDisplay({
     if (playerScore === cardCount) {
       clearTimeout(displayTimeout);
       clearTimeout(unflipTimeout);
+      music.pause();
       playVictorySound();
       handleVictory();
     }
   });
+
+  useEffect(() => {
+    isMusicPlaying ? music.play() : music.pause();
+  }, [isMusicPlaying, music]);
 
   function playVictorySound() {
     const sound = new Audio(victorySound);
@@ -180,6 +189,7 @@ export default function GameDisplay({
     console.log({ clickedCardIndex });
 
     if (displayedCards[clickedCardIndex].clicked) {
+      music.pause();
       playDefeatSound();
       handleGameOver();
       return;

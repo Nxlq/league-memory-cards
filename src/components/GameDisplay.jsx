@@ -119,7 +119,12 @@ export default function GameDisplay({
   });
 
   useEffect(() => {
-    isMusicPlaying ? music.play() : music.pause();
+    if (isMusicPlaying) {
+      music.currentTime = 1;
+      music.play();
+    } else {
+      music.pause();
+    }
   }, [isMusicPlaying, music]);
 
   function playVictorySound() {

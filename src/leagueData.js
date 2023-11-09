@@ -1,6 +1,6 @@
 async function fetchChampionsList() {
   const response = await fetch(
-    "http://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion.json",
+    "https://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion.json",
     { mode: "cors" }
   );
 
@@ -13,7 +13,7 @@ async function fetchChampionsDetails(championsList) {
   for (const champion in championsList.data) {
     promises.push(
       fetch(
-        `http://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion/${champion}.json`,
+        `https://ddragon.leagueoflegends.com/cdn/13.21.1/data/en_US/champion/${champion}.json`,
         { mode: "cors" }
       )
     );

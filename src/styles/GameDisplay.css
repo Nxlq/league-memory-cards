@@ -83,3 +83,30 @@
 .invisible {
   display: none;
 }
+
+@media (max-width: 600px) {
+  .scoreboard {
+    font-size: 0.8rem;
+    padding-bottom: 0.7rem;
+  }
+
+  .card__wrapper {
+    width: calc(5rem + 6px);
+    height: 10rem;
+    /* padding-bottom: */
+    perspective: 800px;
+    /* border-radius: 3px; */
+  }
+
+  .card-grid {
+    width: 20rem;
+  }
+
+  .card-grid__wrapper {
+    /* max-width: 25rem; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 3rem 0;
+  }
+}

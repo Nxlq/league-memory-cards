@@ -28,7 +28,7 @@ function DifficultySelection({
 
 function CurrentDifficultyDisplay({ difficultyLevel }) {
   return (
-    <div className="rank-display__container">
+    <div className="rank-display__container" id="current-diff-display">
       <h2>Difficulty Selected:</h2>
       <img
         className="rank-image"
@@ -42,7 +42,7 @@ function CurrentDifficultyDisplay({ difficultyLevel }) {
 
 function HighestRankDisplay({ highestRankAchieved }) {
   return (
-    <div className="rank-display__container">
+    <div className="rank-display__container" id="highest-diff-display">
       <h2>Your Highest Rank:</h2>
       <img
         className="rank-image"

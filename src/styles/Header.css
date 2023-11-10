@@ -26,3 +26,13 @@
   margin: 0;
   margin-right: auto;
 }
+
+@media (max-width: 600px) {
+  .header-title {
+    font-size: 0.6rem;
+  }
+
+  .header-title > img {
+    height: 3rem;
+  }
+}

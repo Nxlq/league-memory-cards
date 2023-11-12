@@ -61,19 +61,24 @@ export default function StartScreen({
   difficulties,
   highestRankAchieved,
   playClickSound,
+  imagePool,
 }) {
   return (
     <div className="start-screen__container">
       <Header />
-      <button
-        className="start-btn"
-        onClick={() => {
-          playClickSound();
-          handleStartGame();
-        }}
-      >
-        Play
-      </button>
+      {imagePool !== null ? (
+        <button
+          className="start-btn"
+          onClick={() => {
+            playClickSound();
+            handleStartGame();
+          }}
+        >
+          Play
+        </button>
+      ) : (
+        <button className="start-btn">loading...</button>
+      )}
       <div className="game-info__wrapper">
         <CurrentDifficultyDisplay difficultyLevel={difficultyLevel} />
         <DifficultySelection

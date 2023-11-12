@@ -114,6 +114,7 @@ function App() {
           difficulties={DIFFICULTIES}
           highestRankAchieved={highestRankAcheived}
           playClickSound={playClickSound}
+          imagePool={imagePool}
         />
       )}
       {gameStatus === "playing" && (
